@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-transformer-blurhash",
+  "name": "@m5r/gatsby-transformer-blurhash",
   "description": "Compact representations of placeholders for images",
   "version": "1.0.0",
   "author": "Mokhtar Mial <mokht@rmi.al>",
