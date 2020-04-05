@@ -1,0 +1,4 @@
+/*.js
+!index.js
+.idea
+node_modules

@@ -1,0 +1,27 @@
+{
+  "name": "gatsby-transformer-blurhash",
+  "description": "Compact representations of placeholders for images",
+  "version": "1.0.0",
+  "author": "Mokhtar Mial <mokht@rmi.al>",
+  "bugs": {
+    "url": "https://github.com/m5r/gatsby-transformer-blurhash/issues"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "homepage": "https://github.com/m5r/gatsby-transformer-blurhash#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "image",
+    "blurhash"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/m5r/gatsby-transformer-blurhash.git"
+  },
+  "scripts": {},
+  "engines": {
+    "node": ">=10.13.0"
+  }
+}
