@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-transformer-blurhash generateBlurhash cached 1`] = `
+Object {
+  "base64Image": "cached base64 image string",
+}
+`;
+
+exports[`gatsby-transformer-blurhash generateBlurhash not cached 1`] = `
+Object {
+  "base64Image": "canvas data url",
+}
+`;

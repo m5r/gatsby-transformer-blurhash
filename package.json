@@ -19,7 +19,8 @@
     "@babel/core": "^7.8.7",
     "babel-preset-gatsby-package": "^0.3.1",
     "cross-env": "^5.2.1",
-    "debug": "^3.2.6"
+    "debug": "^3.2.6",
+    "jest": "^25.2.7"
   },
   "peerDependencies": {
     "gatsby": "^2.0.0",
@@ -38,6 +39,7 @@
     "url": "https://github.com/m5r/gatsby-transformer-blurhash.git"
   },
   "scripts": {
+    "test": "jest",
     "build": "babel src --out-dir . --ignore **/__tests__",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir . --ignore **/__tests__"
