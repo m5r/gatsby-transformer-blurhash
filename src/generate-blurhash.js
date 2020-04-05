@@ -1,7 +1,7 @@
 const { resolve, parse } = require("path");
 
 const Debug = require("debug");
-const { exists, readFile, writeFile } = require("fs-extra");
+const { exists, readFileSync, writeFile } = require("fs-extra");
 const PQueue = require("p-queue");
 const blurhash = require("blurhash");
 const { createCanvas, loadImage } = require("canvas");
@@ -49,14 +49,14 @@ module.exports = async function generateBlurhash(options) {
 			try {
 				if (await exists(cachePath)) {
 					debug(`Base64 result file already exists for ${name} (${contentDigest}-${optionsHash})`);
-					base64Image = (await readFile(cachePath, `utf8`)).toString();
+					base64Image = readFileSync(cachePath, `utf8`).toString();
 				} else {
 					debug(`Generate base64 result file of ${name} (${contentDigest}-${optionsHash})`);
 
 					const clampedX = Math.min(9, Math.max(1, componentX));
 					const clampedY = Math.min(9, Math.max(1, componentY));
 
-					const buffer = await readFile(absolutePath);
+					const buffer = readFileSync(absolutePath);
 					const image = await loadImage(buffer);
 					const canvas = createCanvas(width, height);
 					const ctx = canvas.getContext("2d");

@@ -59,10 +59,11 @@ async function blurhashSharp({ cache, getNodeAndSavePathDependency, store }) {
 					defaultValue: 3,
 				},
 				width: {
-					type: new GraphQLNonNull(GraphQLInt),
+					type: GraphQLInt,
+					defaultValue: 400,
 				},
 				height: {
-					type: new GraphQLNonNull(GraphQLInt),
+					type: GraphQLInt,
 				},
 				grayscale: {
 					type: GraphQLBoolean,
@@ -85,8 +86,6 @@ async function blurhashSharp({ cache, getNodeAndSavePathDependency, store }) {
 				const {
 					componentX,
 					componentY,
-					width,
-					height,
 					grayscale,
 					duotone,
 					cropFocus,
@@ -94,8 +93,8 @@ async function blurhashSharp({ cache, getNodeAndSavePathDependency, store }) {
 				} = fieldArgs;
 
 				const sharpArgs = {
-					width,
-					height,
+					width: fieldArgs.width,
+					height: fieldArgs.height,
 					grayscale,
 					duotone,
 					cropFocus,
@@ -112,7 +111,11 @@ async function blurhashSharp({ cache, getNodeAndSavePathDependency, store }) {
 					await job.finishedPromise;
 				}
 
-				const { absolutePath } = job;
+				const {
+					absolutePath,
+					width,
+					height,
+				} = job;
 
 				return generateBlurhash({
 					cache,
