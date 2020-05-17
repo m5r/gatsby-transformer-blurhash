@@ -1,6 +1,6 @@
 const { resolve } = require("path");
 
-const { exists, readFile, writeFile } = require("fs-extra");
+const { exists, readFileSync, writeFile } = require("fs-extra");
 const blurhash = require("blurhash");
 const { createCanvas, loadImage } = require("canvas");
 
@@ -32,7 +32,7 @@ jest.mock("canvas", () => ({
 
 jest.mock("fs-extra", () => ({
 	exists: jest.fn(() => false),
-	readFile: jest.fn(() => "cached base64 image string"),
+	readFileSync: jest.fn(() => "cached base64 image string"),
 	writeFile: jest.fn(),
 }));
 
@@ -44,7 +44,7 @@ afterEach(() => {
 	loadImage.mockClear();
 
 	exists.mockClear();
-	readFile.mockClear();
+	readFileSync.mockClear();
 	writeFile.mockClear();
 });
 
@@ -79,7 +79,7 @@ describe("gatsby-transformer-blurhash", () => {
 			});
 			expect(result).toMatchSnapshot();
 
-			const readFileArgs = readFile.mock.calls[0];
+			const readFileArgs = readFileSync.mock.calls[0];
 			expect(readFileArgs[0]).toBe(absolutePath);
 
 			expect(blurhash.encode).toHaveBeenCalledTimes(1);
@@ -91,7 +91,7 @@ describe("gatsby-transformer-blurhash", () => {
 
 			expect(exists).toHaveBeenCalledTimes(1);
 			expect(writeFile).toHaveBeenCalledTimes(1);
-			expect(readFile).toHaveBeenCalledTimes(1);
+			expect(readFileSync).toHaveBeenCalledTimes(1);
 		});
 
 		it("cached", async () => {
@@ -122,7 +122,7 @@ describe("gatsby-transformer-blurhash", () => {
 
 			expect(exists).toHaveBeenCalledTimes(1);
 			expect(writeFile).toHaveBeenCalledTimes(0);
-			expect(readFile).toHaveBeenCalledTimes(1);
+			expect(readFileSync).toHaveBeenCalledTimes(1);
 		});
 	});
 });
