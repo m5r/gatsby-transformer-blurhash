@@ -3,11 +3,13 @@
 exports[`gatsby-transformer-blurhash generateBlurhash cached 1`] = `
 Object {
   "base64Image": "cached base64 image string",
+  "hash": "mocked blurhashed encoded string",
 }
 `;
 
 exports[`gatsby-transformer-blurhash generateBlurhash not cached 1`] = `
 Object {
   "base64Image": "canvas data url",
+  "hash": "mocked blurhashed encoded string",
 }
 `;

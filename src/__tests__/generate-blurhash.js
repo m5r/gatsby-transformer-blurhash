@@ -32,7 +32,10 @@ jest.mock("canvas", () => ({
 
 jest.mock("fs-extra", () => ({
 	exists: jest.fn(() => false),
-	readFileSync: jest.fn(() => "cached base64 image string"),
+	readFileSync: jest.fn(() => (JSON.stringify({
+		"base64Image": "cached base64 image string",
+		"hash": "mocked blurhashed encoded string"
+	}))),
 	writeFile: jest.fn(),
 }));
 

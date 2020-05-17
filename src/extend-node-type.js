@@ -47,6 +47,7 @@ async function blurhashSharp({ cache, getNodeAndSavePathDependency, store }) {
 				name: "BlurhashSharp",
 				fields: {
 					base64Image: { type: GraphQLString },
+					hash: { type: GraphQLString }
 				},
 			}),
 			args: {

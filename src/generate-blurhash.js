@@ -36,20 +36,22 @@ module.exports = async function generateBlurhash(options) {
 	const optionsHash = createContentDigest(blurhashOptions);
 
 	const cacheKey = `${contentDigest}-${optionsHash}`;
-	const cachePath = resolve(cacheDir, `${cacheKey}.b64`);
+	const cachePath = resolve(cacheDir, `${cacheKey}.json`);
 
 	debug(`Request preview generation for ${name} (${contentDigest}-${optionsHash})`);
 
 	return queue.add(async () => {
-		let base64Image = await cache.get(cacheKey);
+		let result = await cache.get(cacheKey);
 
-		if (!base64Image) {
+		if (!result) {
 			debug(`Executing preview generation request for ${name} (${contentDigest}-${optionsHash})`);
 
 			try {
 				if (await exists(cachePath)) {
 					debug(`Base64 result file already exists for ${name} (${contentDigest}-${optionsHash})`);
-					base64Image = readFileSync(cachePath, `utf8`).toString();
+					result = JSON.parse(
+						readFileSync(cachePath, `utf8`)
+					);
 				} else {
 					debug(`Generate base64 result file of ${name} (${contentDigest}-${optionsHash})`);
 
@@ -77,13 +79,18 @@ module.exports = async function generateBlurhash(options) {
 					imageCanvasPixels.data.set(pixels);
 					ctx.putImageData(imageCanvasPixels, 0, 0);
 
-					base64Image = canvas.toDataURL();
+					const base64Image = canvas.toDataURL();
 
-					await writeFile(cachePath, base64Image);
+					result = {
+						hash: blurhashed,
+						base64Image
+					};
+
+					await writeFile(cachePath, JSON.stringify(result));
 					debug(`Wrote base64 result file to disk for ${name} (${contentDigest}-${optionsHash})`);
 				}
 
-				await cache.set(cacheKey, base64Image);
+				await cache.set(cacheKey, result);
 			} catch (err) {
 				err.message = `Unable to generate blurhash for ${name} (${contentDigest}-${optionsHash})\n${err.message}`;
 
@@ -91,6 +98,6 @@ module.exports = async function generateBlurhash(options) {
 			}
 		}
 
-		return { base64Image };
+		return result;
 	});
 };
